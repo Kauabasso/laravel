@@ -1,20 +1,27 @@
 <?php
 
+use App\Http\Controllers\CalculosController;
+use App\Http\Controllers\KeepinhoController;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
     return view('welcome');
-   
+
 });
-Route::get('/teste', function(){
+Route::get('/teste', function () {
     return view('teste');//somente se existe uma pasta teste na views
 });
-Route::get('/teste/{valor}', function($valor){
+Route::get('/teste/{valor}', function ($valor) {
     return "Você digitou: {$valor}";
 });
-Route::get('/teste/{valor1}/{valor2}', function($valor1,$valor2){
-    $Soma= $valor1 + $valor2;
-    return "Soma: {$Soma}";
-});
+Route::get('/calc/somar/{valor1}/{valor2}', [CalculosController::class, 'somar']);
 
+Route::get('/calc/subtrair/{valor1}/{valor2}', [CalculosController::class, 'subtrair']);
+
+Route::get('/calc/quadrado/{valor1}', [CalculosController::class, 'quadrado']);
 //Cálculos
+
+//Keepinho
+Route::prefix('/keep')->group(function (){
+    Route::get('/', [KeepinhoController::class,'index']);
+});
