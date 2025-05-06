@@ -12,6 +12,8 @@
 @foreach ($notas as $nota)
     <div style="border:1px dashed green; padding: 2px">
         {{ $nota->texto }}
+        <br>
+        <a href="{{ route('keep.editar', $nota->id) }}">Editar</a>
     </div>
 
 @endforeach

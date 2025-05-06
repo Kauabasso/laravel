@@ -16,6 +16,16 @@ class KeepinhoController extends Controller
     }
 
     public function gravar(Request $request){
-        dd($request);
+        //Cria uma nota com todos os valores enviados pelo formulário
+        //Porém, a Model vai ficar apenas
+        //com aqueles listados no $fillable
+
+        Nota::create($request->all());
+        return redirect()->route('keep');
+    }
+    public function editar(Nota $nota){
+        return view('keepinho.editar', [
+            'nota'=> $nota
+        ]);
     }
 }
