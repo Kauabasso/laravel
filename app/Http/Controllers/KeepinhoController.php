@@ -23,7 +23,15 @@ class KeepinhoController extends Controller
         Nota::create($request->all());
         return redirect()->route('keep');
     }
-    public function editar(Nota $nota){
+    public function editar(Nota $nota, Request $request ){
+        if ($request->isMethod('put')){
+            $nota = Nota::find($request->id);
+            $nota->texto = $request->texto;
+            $nota->save();
+
+            return redirect()->route('keep');
+        }
+
         return view('keepinho.editar', [
             'nota'=> $nota
         ]);
