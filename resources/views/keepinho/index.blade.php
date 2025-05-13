@@ -2,33 +2,32 @@
 
 <p>Seja bem-vindo ao Keepinho, o seu assistente pessoal</p>
 <hr>
+@if($errors->any())
+<div style="color:red">
+<h3>ERRO!</h3>
+</div>
+
+@endif
 <form action="{{ route('keep.gravar') }}" method="post">
     @csrf
-    <label for="">Origem</label>
-    <input type="text" name="origem" cols="30" rows="10">
+    <input type="text" name="titulo" placeholder="Título da nota">
     <br>
-    <label for="">destino:</label>
-    <input type="text" name="destino" cols="30" rows="10">
-    <br>
-    <label for="">data:</label>
-    <input type="date" name="data" cols="30" rows="10">
-    <br>
-    <label for="">Companhia aérea:</label>
-    <input type="text" name="companhia" cols="30" rows="10">
-    <br>
-    <label for="">Número do voo:</label>
-    <input type="text" name="numero_voo" cols="30" rows="10">
-    <br>
-    <label for="">Preço:</label>
-    <input type="number" name="preco" cols="30" rows="10">
+    <textarea name="texto" placeholder="escreva" cols="30" rows="10"></textarea>
     <br>
     <input type="submit" value="Gravar nota">
 </form>
 <hr>
-@foreach ($voos as $voo)
+@foreach ($notas as $nota)
     <div style="border:1px dashed green; padding: 2px">
-        {{ $voo->origem }}
+        {{ $nota->texto }}
         <br>
-        <a href="{{ route('keep.editar', $voo->id) }}">Editar</a>
+        <a href="{{ route('keep.editar', $nota->id) }}">Editar</a>
+        <form action="{{route('keep.apagar',$nota->id) }}" method="post">
+            @csrf
+            @method('DELETE')
+            <input type="submit" value="Excluir">
+        </form>
     </div>
+
+
 @endforeach

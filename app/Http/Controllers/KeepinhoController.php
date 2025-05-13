@@ -2,17 +2,16 @@
 
 namespace App\Http\Controllers;
 
-
-use App\Models\voos;
+use App\Models\Nota;
 use Illuminate\Http\Request;
 
 class KeepinhoController extends Controller
 {
     public function index(){
-        $voos = voos::all();//estava notas
+        $notas = Nota::all();
         //dd($notas);//importante para quando quiser entender o código(dados do banco, por exemplo)
         return view('keepinho/index', [
-            'voos' => $voos,
+            'notas' => $notas,
         ]);
     }
 
@@ -20,26 +19,30 @@ class KeepinhoController extends Controller
         //Cria uma nota com todos os valores enviados pelo formulário
         //Porém, a Model vai ficar apenas
         //com aqueles listados no $fillable
+        $dados = $request->validate([
+            'titulo' => 'required',
+            'texto' => 'required',
+        ]);
 
-        voos::create($request->all());
+        Nota::create($dados);
         return redirect()->route('keep');
     }
-    public function editar(voos $voo, Request $request ){
+    public function editar(Nota $nota, Request $request ){
         if ($request->isMethod('put')){
-            $voo = voos::find($request->id);
-            $voo->origem = $request->origem;
-            $voo->destino = $request->destino;
-            $voo->data = $request->data;
-            $voo->companhia = $request->companhia;
-            $voo->numero_voo = $request->numero_voo;
-            $voo->preco = $request->preco;
-            $voo->save();
+            $nota = Nota::find($request->id);
+            $nota->texto = $request->texto;
+            $nota->save();
 
             return redirect()->route('keep');
         }
 
         return view('keepinho.editar', [
-            'voo'=> $voo
+            'nota'=> $nota
         ]);
+       
+    }
+    public function apagar(Nota $nota){
+        $nota->delete();
+        return redirect()->route('keep');
     }
 }
