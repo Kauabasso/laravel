@@ -20,7 +20,7 @@ class KeepinhoController extends Controller
         //Porém, a Model vai ficar apenas
         //com aqueles listados no $fillable
         $dados = $request->validate([
-            'titulo' => 'required',
+            'titulo' => 'required|min:3|max:255',//titulo ter no mínimo três caracteres e máximo 255 caracteres conforme o varchar
             'texto' => 'required',
         ]);
 

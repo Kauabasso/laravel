@@ -5,6 +5,11 @@
 @if($errors->any())
 <div style="color:red">
 <h3>ERRO!</h3>
+<ul>
+    @foreach ($errors->all() as $err)
+    <li>{{ $err }}</li>
+    @endforeach
+</ul>
 </div>
 
 @endif
