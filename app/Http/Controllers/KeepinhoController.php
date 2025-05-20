@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\NotaRequest;
 use App\Models\Nota;
 use Illuminate\Http\Request;
 
@@ -15,22 +16,19 @@ class KeepinhoController extends Controller
         ]);
     }
 
-    public function gravar(Request $request){
+    public function gravar(NotaRequest $request){
         //Cria uma nota com todos os valores enviados pelo formulário
         //Porém, a Model vai ficar apenas
         //com aqueles listados no $fillable
-        $dados = $request->validate([
-            'titulo' => 'required|min:3|max:255',//titulo ter no mínimo três caracteres e máximo 255 caracteres conforme o varchar
-            'texto' => 'required',
-        ]);
+        $dados = $request->validated();//já validaos pela própria request
 
         Nota::create($dados);
         return redirect()->route('keep');
     }
-    public function editar(Nota $nota, Request $request ){
+    public function editar(Nota $nota, NotaRequest $request ){
         if ($request->isMethod('put')){
             $nota = Nota::find($request->id);
-            $nota->texto = $request->texto;
+            $nota->fill($request->all());//economiza espaço, pega o texto e o titulo para editar(gravar)
             $nota->save();
 
             return redirect()->route('keep');
