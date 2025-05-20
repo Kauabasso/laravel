@@ -17,11 +17,11 @@
     @csrf
 
     <input type="hidden" name="id" value="{{ $nota->id }}">
-    <input type="text" name="titulo" placeholder="Título da nota" value="{{$nota->titulo}}"><br>
-    <textarea name="texto" cols="30" rows="10">{{($nota->texto)}}</textarea>
+    <input type="text" name="titulo" placeholder="Título da nota" value="{{old('titulo',$nota->titulo)}}"><br>
+    <textarea name="texto" cols="30" rows="10">{{(old('texto',$nota->texto))}}</textarea>
    
     <br>
     <input type="submit" value="Editar nota">
 </form>
-<hr>
+
 
