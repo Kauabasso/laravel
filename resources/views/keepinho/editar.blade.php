@@ -1,4 +1,4 @@
-<h1>Keepinho</h1>
+<h1>💡Keepinho</h1>
 
 @if($errors->any())
 <div style="color:red">
