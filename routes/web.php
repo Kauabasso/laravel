@@ -1,9 +1,13 @@
 <?php
 
+
 use App\Http\Controllers\AutenticaController;
 use App\Http\Controllers\CalculosController;
 use App\Http\Controllers\KeepinhoController;
+
+use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
+
 
 Route::get('/', function () {
     return view('welcome');
@@ -21,31 +25,40 @@ Route::get('/calc/subtrair/{valor1}/{valor2}', [CalculosController::class, 'subt
 
 Route::get('/calc/quadrado/{valor1}', [CalculosController::class, 'quadrado']);
 //Cálculos
+Route::get('/dashboard', function () {
+    return view('dashboard');
+})->middleware(['auth', 'verified'])->name('dashboard');
 
 //Keepinho
-Route::prefix('/keep')->group(function (){
-    Route::get('/', [KeepinhoController::class,'index'])->name('keep');
+Route::prefix('/keep')->group(function () {
+    Route::get('/', [KeepinhoController::class, 'index'])->name('keep');
 
-    Route::post('/gravar', [KeepinhoController::class,
-    'gravar'])->name('keep.gravar');
+    Route::post('/gravar', [
+        KeepinhoController::class,
+        'gravar'
+    ])->name('keep.gravar');
 
-    Route::get('/editar/{nota}', [KeepinhoController::class,
-    'editar'])->name('keep.editar');
 
-    Route::put('/editar', [KeepinhoController::class,
-    'editar'])->name('keep.editarGravar');//Ação
+    Route::get('/editar/{nota}', [
+        KeepinhoController::class,
+        'editar'
+    ])->name('keep.editar');
+
+    Route::put('/editar', [
+        KeepinhoController::class,
+        'editar'
+    ])->name('keep.editarGravar');//Ação
 
     Route::delete('/apagar/{nota}', [KeepinhoController::class, 'apagar'])->name('keep.apagar');
 
-    Route::get('/lixeira',[KeepinhoController::class,'lixeira'])->name('keep.lixeira');
+    Route::get('/lixeira', [KeepinhoController::class, 'lixeira'])->name('keep.lixeira');
 
-    Route::get('/restaurar/{nota}', [KeepinhoController::class,'restaurar'])->name('keep.restaurar');
+    Route::get('/restaurar/{nota}', [KeepinhoController::class, 'restaurar'])->name('keep.restaurar');
+});
+Route::middleware('auth')->group(function () {
+    Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
+    Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
+    Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 });
 
-Route::get('/autenticar', [AutenticaController::class, 'index'])->name('autentica');
-
-Route::post('/autenticar/gravar', [AutenticaController::class, 'gravar'])->name('autentica.gravar');
-
-Route::get('/autenticar/login', [AutenticaController::class,'login'])->name('autentica.login');
-
-Route::post('/autenticar/login',[AutenticaController::class,'login']);
+require __DIR__ . '/auth.php';
