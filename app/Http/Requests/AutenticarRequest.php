@@ -25,6 +25,8 @@ class AutenticarRequest extends FormRequest
             'name' => 'required',
             'email' => 'required|email',
             'password' => 'required|confirmed',
+            
+
         ];
     }
 }

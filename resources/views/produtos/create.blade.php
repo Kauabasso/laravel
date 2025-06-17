@@ -10,7 +10,7 @@
             <div class="bg-white dark:bg-gray-800 overflow-hidden shadow-sm sm:rounded-lg">
                 <div class="p-6 text-gray-900 dark:text-gray-100">
                     
-                <form method="POST" action="{{ route('produtos.store') }}">
+                <form method="POST" action="{{ route('produtos.store') }}" enctype="multipart/form-data">
                     @csrf
                     <!--Nome-->
                     <div>
@@ -33,6 +33,10 @@
                         <x-input-error :messages="$errors->get('name')" class="mt-2" />
                     </div>
                     <br>
+                    <div>
+                    <input type="file" name="imagem" id="imagem" accept="image/*"
+                    </div>
+                    <br><br>
                     <x-primary-button>
                         Gravar Produto
                     </x-primary-button>

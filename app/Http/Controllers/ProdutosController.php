@@ -12,7 +12,8 @@ class ProdutosController extends Controller
      */
     public function index()
     {
-        return view('produtos.index');
+        $produtos = Produto::all(); 
+        return view('produtos.index', compact('produtos'));
     }
 
     /**
@@ -27,10 +28,25 @@ class ProdutosController extends Controller
      * Store a newly created resource in storage.
      */
     public function store(Request $request)
-    {
-        Produto::create($request->all());
-        return redirect()->route('produtos.index');
+{
+    $produtos = $request->validate([
+        'nome' => 'required',
+        'preco' => 'required',
+        'descricao' => 'required',
+        'imagem' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
+    ]);
+
+    if ($request->hasFile('imagem')) {
+        $imagem = $request->file('imagem');
+        $caminhoImagem = $imagem->store('produtos', 'public');
+        $produtos['imagem'] = $caminhoImagem; 
     }
+
+    Produto::create($produtos);
+
+    return redirect()->route('produtos.index');
+}
+
 
     /**
      * Display the specified resource.

@@ -32,4 +32,5 @@ class AutenticaController extends Controller
       Auth::logout();
       return redirect()->route('autentica');
     }
+    
 }
