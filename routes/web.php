@@ -3,6 +3,7 @@
 
 use App\Http\Controllers\AutenticaController;
 use App\Http\Controllers\CalculosController;
+use App\Http\Controllers\CarrinhoController;
 use App\Http\Controllers\KeepinhoController;
 
 use App\Http\Controllers\ProdutosController;
@@ -64,4 +65,10 @@ Route::middleware('auth')->group(function () {
 
 Route::resource('produtos', ProdutosController::class);
 
+
+Route::get('/carrinho', [CarrinhoController::class, 'index'])->name('carrinho.index');
+
+
+Route::post('/carrinho/gravar', [CarrinhoController::class, 'gravar'])->name('carrinho.gravar');
+Route::delete('/carrinho/{produto}', [CarrinhoController::class, 'apagar'])->name('carrinho.apagar');
 require __DIR__ . '/auth.php';

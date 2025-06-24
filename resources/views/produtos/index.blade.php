@@ -27,9 +27,12 @@
                             </div>
                         @endif
 
-                        <h2 class="text-lg font-semibold text-gray-800 dark:text-gray-200">{{ $produto->name }}</h2>
+                        <p class="text-lg font-semibold text-gray-800 dark:text-gray-200">{{ $produto->name }}</p>
                         <p class="text-sm text-gray-600 dark:text-gray-300">Preço: R$ {{ number_format($produto->preco, 2, ',', '.') }}</p>
                         <p class="text-sm text-gray-600 dark:text-gray-300 mt-2">{{ $produto->descricao }}</p>
+                        <a class="text-sm text-gray-600 dark:text-gray-300 mt-2" href="{{ route('carrinho.index') }}">Adicionar</a>
+
+                       
                     </div>
                 @empty
                     <p class="text-gray-600 dark:text-gray-300">Nenhum produto cadastrado ainda.</p>
