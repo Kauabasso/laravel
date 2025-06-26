@@ -13,24 +13,36 @@ class CarrinhoController extends Controller
         return view('carrinho.index', compact('carrinho'));
     }
 
-    public function apagar(Produto $produto)
-    {
-        $produto->delete();
-        return redirect()->route('carrinho');
-    }
+   public function apagar($id)
+{
+    $carrinho = session()->get('carrinho', []);
+    unset($carrinho[$id]); 
+    session()->put('carrinho', $carrinho);
+    return redirect()->route('carrinho.index');
+}
 
-    public function gravar(Request $request)
-    {
-       
-        $dados = $request->validate([
-            'nome' => 'required|string',
-            'preco' => 'required|numeric',
-          
-        ]);
 
-        Produto::create($dados);
+   public function gravar(Request $request)
+{
+    $dados = $request->validate([
+        'id' => 'required|integer',
+        'nome' => 'required|string',
+        'preco' => 'required|numeric',
+        'imagem' => 'nullable|string',
+    ]);
 
-        return redirect()->route('carrinho'); 
-    }
+    $carrinho = session()->get('carrinho', []);
+
+    $carrinho[$dados['id']] = [
+        'nome' => $dados['nome'],
+        'preco' => $dados['preco'],
+        'imagem' => $dados['imagem'],
+    ];
+
+    session()->put('carrinho', $carrinho);
+
+    return redirect()->route('carrinho.index');
+}
+
 }
 
