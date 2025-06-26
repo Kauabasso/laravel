@@ -9,7 +9,7 @@ class CarrinhoController extends Controller
 {
     public function index()
     {
-        $carrinho = session()->get('carrinho', []);
+        $carrinho = session()->get('carrinho', []); 
         return view('carrinho.index', compact('carrinho'));
     }
 
@@ -22,22 +22,11 @@ class CarrinhoController extends Controller
 }
 
 
-   public function gravar(Request $request)
+   public function gravar(Request $request, Produto $produto)
 {
-    $dados = $request->validate([
-        'id' => 'required|integer',
-        'nome' => 'required|string',
-        'preco' => 'required|numeric',
-        'imagem' => 'nullable|string',
-    ]);
 
     $carrinho = session()->get('carrinho', []);
-
-    $carrinho[$dados['id']] = [
-        'nome' => $dados['nome'],
-        'preco' => $dados['preco'],
-        'imagem' => $dados['imagem'],
-    ];
+    $carrinho[$produto->id] = $produto;
 
     session()->put('carrinho', $carrinho);
 

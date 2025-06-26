@@ -68,8 +68,8 @@ Route::resource('produtos', ProdutosController::class);
 
 
 Route::get('/carrinho', [CarrinhoController::class, 'index'])->name('carrinho.index');
-Route::post('/carrinho/gravar', [CarrinhoController::class, 'gravar'])->name('carrinho.gravar');
-Route::get('/carrinho/remover/{id}', [CarrinhoController::class, 'apagar'])->name('carrinho.apagar');
+Route::get('/carrinho/gravar/{produto}', [CarrinhoController::class, 'gravar'])->name('carrinho.gravar');
+Route::get('/carrinho/remover/{produto}', [CarrinhoController::class, 'apagar'])->name('carrinho.apagar');
 
 
 require __DIR__ . '/auth.php';

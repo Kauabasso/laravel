@@ -30,14 +30,9 @@
                         <p class="text-lg font-semibold text-gray-800 dark:text-gray-200">{{ $produto->nome }}</p>
                         <p class="text-sm text-gray-600 dark:text-gray-300">Preço: R$ {{ number_format($produto->preco, 2, ',', '.') }}</p>
                         <p class="text-sm text-gray-600 dark:text-gray-300 mt-2">{{ $produto->descricao }}</p>
-                      <form method="POST" action="{{ route('carrinho.gravar') }}">
-                        @csrf
-                        <input type="hidden" name="id" value="{{ $produto->id }}">
-                        <input type="hidden" name="nome" value="{{ $produto->name }}">
-                        <input type="hidden" name="preco" value="{{ $produto->preco }}">
-                        <input type="hidden" name="imagem" value="{{ $produto->imagem }}">
-                        <button type="submit" class="text-sm text-blue-600 hover:underline">Adicionar ao Carrinho</button>
-                       </form>
+                        <a href="{{ route('carrinho.gravar',$produto->id )}}">Adicionar ao carrinho</a>
+
+                   
 
 
 
