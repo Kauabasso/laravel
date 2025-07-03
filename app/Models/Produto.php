@@ -2,9 +2,11 @@
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+
+
 class Produto extends Model
 {
     use HasFactory;
@@ -16,11 +18,8 @@ class Produto extends Model
         'imagem',
         'categoria_id'
     ];
-    public function produto(): BelongsTo
+    public function categoria(): BelongsTo
     {
-        return $this->belongsTo(User::class);
+        return $this->belongsTo(Categoria::class);
     }
 }
-
-
-
